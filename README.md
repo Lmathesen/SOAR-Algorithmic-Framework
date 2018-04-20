@@ -14,17 +14,17 @@ The current code in the reposity is configured to match the implementation used 
 As outlined in the paper, this algorithm contains three core components.
 
 ### Global Surrogate Modeling
-	* We make use of spatial Gaussian Process Models, specifically the Ordinary Kriging form with diagonal covariance matrix perturbations for numerical parameter estimation.
-	* All files needed for global surrogate estimation are contained in the "Ordinary Kriging Implementation" folder.
-	* All coded algorithms in this repository execute a constant mean form with Gaussian Correlation function, please refer to the files in this folder for alternative Kriging model implementations for different modeling assumptions.
+* We make use of spatial Gaussian Process Models, specifically the Ordinary Kriging form with diagonal covariance matrix perturbations for numerical parameter estimation.
+* All files needed for global surrogate estimation are contained in the "Ordinary Kriging Implementation" folder.
+* All coded algorithms in this repository execute a constant mean form with Gaussian Correlation function, please refer to the files in this folder for alternative Kriging model implementations for different modeling assumptions.
 
 ### Local Search Component
 * We make use of a Trust Region Subproblem based approach for local optimization. In the main method 'SOAR_algorithm' file, this entire procedure (with adaptive restart identification integrated) composes lines 138 through 355.  
 * There are two alternatives for the trust region subproblem solved, the quadratic and linear taylor expansion local model forms about the current centroid.
-** Both the linear and quadratic model form function files reside in the "Trust Region Implementation" folder, along with the gradient and hessian estimations function files.  
-** Currently the quadratic model TR subproblem is set as the default alternative, this can be switched to the linear subproblem by altering lines 276 and 280. 
-*** Lines 276 and 280, in three locations total, currently read ...quadratic_model(.,.,G1',H)...
-*** All three of these locations should be altered to read ...linear_model(.,.,G1')... to enable the linear model, which no longer needs hessian estimates
+* Both the linear and quadratic model form function files reside in the "Trust Region Implementation" folder, along with the gradient and hessian estimations function files.  
+* Currently the quadratic model TR subproblem is set as the default alternative, this can be switched to the linear subproblem by altering lines 276 and 280. 
+	* Lines 276 and 280, in three locations total, currently read ...quadratic_model(.,.,G1',H)...
+	* All three of these locations should be altered to read ...linear_model(.,.,G1')... to enable the linear model, which no longer needs hessian estimates
 note if this subproblem is utlized, lines 261 and 354 should be commented. Additionally the for loop condition in lines 220, 250, 318, and 343 need to be altered to "for i = 1:(problem.dim)"  
 	
 ### Adaptive Restart Process
